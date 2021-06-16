@@ -25,7 +25,7 @@ public class MobileAuthenticationProvider implements AuthenticationProvider {
             throw new IllegalStateException("用户code不一致");
         }
 
-        return new MobileAuthenticationToken(null, mobileNumber, code);
+        return new MobileAuthenticationToken(mobileUser.getAuthorities(), mobileNumber, code);
     }
 
     @Override

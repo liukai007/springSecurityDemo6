@@ -37,7 +37,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/failure").permitAll()
 //                .anyRequest().authenticated()
                 //自定义access方法
-                .anyRequest().access("@myAccessServiceImpl.hasPermission(httpServletRequest,authentication)")
+//                .anyRequest().access("@myAccessServiceImpl.hasPermission(httpServletRequest,authentication)")
+
+                //注意必须使用request,而不是上面的
+                .anyRequest().access("@myAccessServiceImpl.hasPermission(request,authentication)")
                 .and().csrf().disable();
 
     }
