@@ -34,8 +34,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.addFilterBefore(mobileAuthenticationProcessingFilter(), AbstractPreAuthenticatedProcessingFilter.class);
         http.authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/loginceshi").permitAll()
-                .antMatchers(HttpMethod.GET,"/failure").permitAll()
-                .anyRequest().authenticated()
+                .antMatchers(HttpMethod.GET, "/failure").permitAll()
+//                .anyRequest().authenticated()
+                //自定义access方法
+                .anyRequest().access("@myAccessServiceImpl.hasPermission(httpServletRequest,authentication)")
                 .and().csrf().disable();
 
     }

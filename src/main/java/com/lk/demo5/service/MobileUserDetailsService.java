@@ -2,6 +2,7 @@ package com.lk.demo5.service;
 
 import com.lk.demo5.domain.MobileUser;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -19,7 +20,10 @@ public class MobileUserDetailsService implements UserDetailsService {
             throw new IllegalStateException("用户名不存在");
         }
         String code = MobileUser.map.get(s);
-        Collection<? extends GrantedAuthority> authorities = Collections.EMPTY_LIST;
+//        Collection<? extends GrantedAuthority> authorities = Collections.EMPTY_LIST;
+        //自定义一个权限
+        Collection<? extends GrantedAuthority> authorities =
+                AuthorityUtils.commaSeparatedStringToAuthorityList("admin,normal,ROLE_r1,/success");
         return new MobileUser(s, code, authorities);
     }
 }
