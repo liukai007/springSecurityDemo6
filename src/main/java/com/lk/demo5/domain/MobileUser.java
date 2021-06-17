@@ -8,6 +8,11 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+
+/*
+* 可以参考这个连接里面的类
+* https://www.cnblogs.com/zwqh/p/11934880.html
+* */
 public class MobileUser extends User {
     public final static Map<String, String> map = new HashMap<>();
 

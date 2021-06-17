@@ -29,19 +29,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
         http.cors();
         http.csrf().disable();
-        http.addFilterBefore(mobileAuthenticationProcessingFilter(), AbstractPreAuthenticatedProcessingFilter.class);
+        http.addFilterAt(mobileAuthenticationProcessingFilter(), AbstractPreAuthenticatedProcessingFilter.class);
+//        http.addFilterBefore(mobileAuthenticationProcessingFilter(), AbstractPreAuthenticatedProcessingFilter.class);
         http.authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/loginceshi").permitAll()
+                .antMatchers(HttpMethod.POST, "/loginceshi").access("permitAll")
                 .antMatchers(HttpMethod.GET, "/failure").permitAll()
 //                .anyRequest().authenticated()
                 //自定义access方法
 //                .anyRequest().access("@myAccessServiceImpl.hasPermission(httpServletRequest,authentication)")
 
-                //注意必须使用request,而不是上面的
+                //注意必须使用request,而不是上面的   https://dqcgm.blog.csdn.net/article/details/109023478
                 .anyRequest().access("@myAccessServiceImpl.hasPermission(request,authentication)")
                 .and().csrf().disable();
+//        http.anonymous().disable();
 
     }
 
@@ -64,7 +67,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         filter.setAuthenticationManager(authenticationManager);
         filter.setAuthenticationSuccessHandler(new Mobile1AuthenticationSuccessHandler("/success"));
         filter.setAuthenticationFailureHandler(new Mobile1AuthenticationFailureHandler("/failure"));
-        filter.setFilterProcessesUrl("/login");
+//        filter.setFilterProcessesUrl("/login");
+        //
+//        filter.setFilterProcessesUrl("/loginceshi");
         return filter;
     }
 

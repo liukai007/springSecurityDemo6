@@ -3,6 +3,7 @@ package com.lk.demo5.service;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
@@ -14,7 +15,8 @@ import java.util.Collection;
 public class MyAccessServiceImpl implements MyAccessService {
     @Override
     public boolean hasPermission(HttpServletRequest request, Authentication authentication) {
-        Object object = authentication.getPrincipal();
+//        Object object = authentication.getPrincipal();
+        Object object = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (object instanceof UserDetailsService) {
             UserDetails userDetails = (UserDetails) object;
             Collection<? extends GrantedAuthority> authorities = userDetails.getAuthorities();
