@@ -32,8 +32,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.cors();
         http.csrf().disable();
-        http.addFilterAt(mobileAuthenticationProcessingFilter(), AbstractPreAuthenticatedProcessingFilter.class);
-//        http.addFilterBefore(mobileAuthenticationProcessingFilter(), AbstractPreAuthenticatedProcessingFilter.class);
+//        http.addFilterAt(mobileAuthenticationProcessingFilter(), AbstractPreAuthenticatedProcessingFilter.class);
+        http.addFilterBefore(mobileAuthenticationProcessingFilter(), AbstractPreAuthenticatedProcessingFilter.class);
         http.authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/loginceshi").access("permitAll")
                 .antMatchers(HttpMethod.GET, "/failure").permitAll()
@@ -68,8 +68,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         filter.setAuthenticationSuccessHandler(new Mobile1AuthenticationSuccessHandler("/success"));
         filter.setAuthenticationFailureHandler(new Mobile1AuthenticationFailureHandler("/failure"));
 //        filter.setFilterProcessesUrl("/login");
-        //
-//        filter.setFilterProcessesUrl("/loginceshi");
+        //处理要进行登录过滤的链接
+        filter.setFilterProcessesUrl("/loginceshi");
         return filter;
     }
 

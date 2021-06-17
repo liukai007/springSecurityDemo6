@@ -1,5 +1,6 @@
 package com.lk.demo5.service;
 
+import com.lk.demo5.other.MobileAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -15,13 +16,18 @@ import java.util.Collection;
 public class MyAccessServiceImpl implements MyAccessService {
     @Override
     public boolean hasPermission(HttpServletRequest request, Authentication authentication) {
-//        Object object = authentication.getPrincipal();
-        Object object = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (object instanceof UserDetailsService) {
-            UserDetails userDetails = (UserDetails) object;
-            Collection<? extends GrantedAuthority> authorities = userDetails.getAuthorities();
-            return authorities.contains(new SimpleGrantedAuthority(request.getRequestURI()));
+
+        if (authentication instanceof MobileAuthenticationToken){
+          return   authentication.getAuthorities().contains(new SimpleGrantedAuthority(request.getRequestURI()));
         }
+
+//        Object object = authentication.getPrincipal();
+//        Object object = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        if (object instanceof UserDetailsService) {
+//            UserDetails userDetails = (UserDetails) object;
+//            Collection<? extends GrantedAuthority> authorities = userDetails.getAuthorities();
+//            return authorities.contains(new SimpleGrantedAuthority(request.getRequestURI()));
+//        }
         return false;
     }
 }

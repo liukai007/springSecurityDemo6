@@ -17,6 +17,8 @@ public class Mobile1AuthenticationSuccessHandler implements AuthenticationSucces
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
-        httpServletRequest.getRequestDispatcher(forwardUrl).forward(httpServletRequest, httpServletResponse);
+//        httpServletRequest.getRequestDispatcher(forwardUrl).forward(httpServletRequest, httpServletResponse);
+        httpServletResponse.sendRedirect(forwardUrl);
+//        httpServletRequest.getRequestDispatcher(forwardUrl).forward(httpServletRequest, httpServletResponse);
     }
 }

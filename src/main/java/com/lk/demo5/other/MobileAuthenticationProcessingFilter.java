@@ -64,5 +64,4 @@ public class MobileAuthenticationProcessingFilter extends AbstractAuthentication
         return sb.toString();
     }
 
-
 }
